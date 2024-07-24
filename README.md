@@ -2,11 +2,11 @@
 
 - Name: Joshua Lum
 
-# helloworld.py
+# helloworld
 
 Learn basic Git operations
 
-# front_lever.ipynb
+# front_lever
 
 Personal project to (1) Check front lever form (hips too high/too low) (2) Track front lever progress (degree of tuck) via live video feed; Using OpenCV and Mediapipe to track right limbs
 
@@ -19,3 +19,7 @@ I could only get real time feedback if someone was around to spot my form. But d
 While developing the program, I discovered an extra bonus. I could also measure hip angle, as a marker of progress from a tucked hip position to full open hip position.
 
 That inspired me, that the potential of this was not just limited to levers. I could also check handstand line, track progress in front splits, etc. But for now, I shall keep my scope small.
+
+# kaggle_titantic
+
+Start working on first real dataset
