@@ -2,10 +2,6 @@
 
 - Name: Joshua Lum
 
-# helloworld
-
-Learn basic Git operations
-
 # front_lever
 
 Personal project to (1) Check front lever form (hips too high/too low) (2) Track front lever progress (degree of tuck) via live video feed; Using OpenCV and Mediapipe to track right limbs
@@ -20,6 +16,9 @@ While developing the program, I discovered an extra bonus. I could also measure 
 
 That inspired me, that the potential of this was not just limited to levers. I could also check handstand line, track progress in front splits, etc. But for now, I shall keep my scope small.
 
-# kaggle_titantic
+# youtube quiz
 
-Start working on first real dataset
+Maybe different functions (1) Recap (2) Active Recall (3) Spaced Recognition (4) Related Topics (5) Deeper Dive (6) Relevance to Career
+Videos are stored by date
+They are tested based on a certain schedule
+App remembers your historical answers and designs questions that are reptitive if your performance is not good and challenges you to dig deeper
