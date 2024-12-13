@@ -13,4 +13,6 @@ pip install -r "/Users/joshualum/Documents/pythonprojects/project 2: quiz/requir
 
 # Run the Streamlit app
 echo "Running the Streamlit app..."
-streamlit run "/Users/joshualum/Documents/pythonprojects/project 2: quiz/streamlit_app.py"
+streamlit run "/Users/joshualum/Documents/pythonprojects/project 2: quiz/app.py"
+
+# python "/Users/joshualum/Documents/pythonprojects/project 2: quiz/app.py"

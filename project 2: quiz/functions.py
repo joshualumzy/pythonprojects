@@ -1,6 +1,10 @@
 import yt_dlp
 from youtube_transcript_api import YouTubeTranscriptApi
 import ollama
+import time
+import os
+from pinecone import Pinecone
+from pinecone import ServerlessSpec
 
 
 class YoutubeProcessor:
@@ -47,27 +51,59 @@ class YoutubeProcessor:
             print(f"Error extracting transcript: {e}")
             return "Transcript not available"
 
-    def generate_summary(self, title: str, transcript: str) -> str:
+    def generate_summary(self):
         """
         Generate a summary using Llama from the video title and transcript.
         """
-        if not transcript:
-            return "No transcript available to summarize."
-
-        prompt = (
-            f"You are an expert learner. You have just watched a YouTube video titled '{title}'. "
-            f"The transcript of the video is as follows: {transcript}. "
-            f"Please generate a concise summary in paragraph form that highlights the key concepts covered."
-        )
-
+        start_time = time.time()
         try:
+            title = self.extract_title()
+            transcript = self.extract_transcript()
+
+            prompt = (
+                f"You are an expert learner. You have just watched a YouTube video titled '{title}'. "
+                f"The transcript of the video is as follows: {transcript}. "
+                f"Please generate summary paragraphs that retains enough detail about the key concepts covered."
+            )
+
             response = ollama.chat(
                 model="llama3.2",
                 messages=[{"role": "user", "content": prompt}],
             )
-            return response.get("message", {}).get(
-                "content", "Error generating summary"
+            summary_runtime = time.time() - start_time
+            return (
+                response.get("message", {}).get("content", "Error generating summary"),
+                summary_runtime,
+                title,
             )
         except Exception as e:
             print(f"Error generating summary: {e}")
             return "Error generating summary"
+
+
+class PineconeDB:
+    def __init__(self, index_name: str, dimension: int):
+        """
+        Initialize the Pinecone vector database
+        """
+        self.index_name = index_name
+        self.dimension = dimension
+
+    def create_index(self):
+        pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+        if self.index_name not in pc.list_indexes().names():
+            pc.create_index(
+                name=self.index_name,
+                dimension=self.dimension,
+                spec=ServerlessSpec(cloud="aws", region="us-east-1"),
+            )  # dimension matches embedding model
+
+        try:
+            # Get index details to confirm it's available and accessible
+            index_description = pc.describe_index(self.index_name)
+            print(
+                f"Index '{self.index_name}' is available. Details: {index_description}"
+            )
+        except Exception as e:
+            print(f"Error accessing the index '{self.index_name}': {str(e)}")
+        return pc.Index(self.index_name)
