@@ -1,0 +1,16 @@
+# Ignore Python bytecode
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment directory
+venv/
+
+# Ignore environment variable files
+.env
+.env/
+
+# macOS specific files
+.DS_Store
+
+# Ignore pytest cache
+.pytest_cache/
